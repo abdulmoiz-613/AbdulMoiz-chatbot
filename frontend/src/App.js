@@ -14,6 +14,9 @@ const App = () => {
   const [speakingMessageId, setSpeakingMessageId] = useState(null); // Track which message is being spoken
   const [currentUtterance, setCurrentUtterance] = useState(null); // Track current speech synthesis
 
+  // API base URL
+  const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+
   // Test microphone access
   const testMicrophone = async () => {
     try {
@@ -194,7 +197,7 @@ const App = () => {
   const handleApiCall = async (message) => {
     setIsConnecting(true);
     try {
-      const response = await fetch('/chat', {
+      const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, context }),
@@ -573,7 +576,7 @@ const App = () => {
       const formData = new FormData();
       formData.append('file', selectedFile);
       try {
-        const response = await fetch('/upload', {
+        const response = await fetch(`${API_BASE_URL}/upload`, {
           method: 'POST',
           body: formData,
         });
